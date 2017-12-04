@@ -1,36 +1,47 @@
 <template>
- <div class="anchor-info">
-    <img src="/static/image/temp.jpg">
+  <div class="anchor-info" v-if="anchor">
+    <img :src="small_head_url">
     <div class="inma">
-        <p>海淀Baby</p>
-        <p>当前<i>66.6</i>人</p>
+      <p>{{anchor.nickname}}</p>
+      <p>当前<i>{{anchor.follow_num}}</i>人</p>
     </div>
     <a href="javascript:void(0);" class="follow">关注</a>
-</div>
-        
+  </div>
+
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
-    name: 'follow'
+    name: 'follow',
+    props: ['anchor'],
+    computed: {
+      ...mapState({
+        imagePath: state => state.config.imagePath
+      }),
+      small_head_url () {
+        return this.imagePath + this.anchor.small_head_url
+      }
+    }
   }
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/css/common/px2rem.scss";
-.anchor-info {
-  position: absolute;
-  left: px2rem(20);
-  top: px2rem(20);
-  width: px2rem(306);
-  height: px2rem(56);
-  border-radius: px2rem(33);
-  z-index: 2;
-  background-color: rgba(64, 53, 53, 0.4);
-  padding: px2rem(8);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @import "../../assets/css/common/px2rem.scss";
+  .anchor-info {
+    position: absolute;
+    left: px2rem(20);
+    top: px2rem(20);
+    width: px2rem(306);
+    height: px2rem(56);
+    border-radius: px2rem(33);
+    z-index: 2;
+    background-color: rgba(64, 53, 53, 0.4);
+    padding: px2rem(8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   img {
     width: px2rem(56);
     height: px2rem(56);
@@ -42,14 +53,14 @@
     display: inline-block;
     font-size: px2rem(22);
     color: #ffffff;
-    p {
-      font-size: px2rem(20);
-      width: px2rem(150);
-      margin-top: px2rem(5);
-      i {
-        font-style: normal;
-      }
-    }
+  p {
+    font-size: px2rem(20);
+    width: px2rem(150);
+    margin-top: px2rem(5);
+  i {
+    font-style: normal;
+  }
+  }
   }
   .follow {
     display: inline-block;
@@ -63,5 +74,5 @@
     text-align: center;
     color: #fe4a89;
   }
-}
+  }
 </style>
