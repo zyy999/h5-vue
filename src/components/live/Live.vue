@@ -26,7 +26,7 @@
 
     <app-share></app-share>
     <app-gift></app-gift>
-    <div class="download-popup" v-bind:style="{ display : (downloadDialogSwitch?'block':'none') }">
+    <div class="download-popup" v-show="downloadDialogSwitch">
       <div class="close" v-on:click="downloadChange"></div>
       <img src="../../assets/image/logo.png" class="down-img">
       <p class="p1">大王直播</p>

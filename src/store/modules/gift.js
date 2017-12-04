@@ -4083,14 +4083,30 @@ const state = {
       }
       ]
     }
-  ]
+  ],
+  selectNumListSwitch:false,
+  num:1
 }
 
-const mutations = {}
+const mutations = {
+  selectNumListShow(state){
+    if(state.selectNumListSwitch === false){
+      state.selectNumListSwitch = true
+    }else{
+      state.selectNumListSwitch = false
+    }
+  },
+  numListSelect(state,num){
+    state.num = num
+    state.selectNumListSwitch = false
+  }
+}
 
 const getters = {}
 
-const actions = {}
+const actions = {
+
+}
 
 export default {
   state,

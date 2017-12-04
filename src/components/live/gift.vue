@@ -1,5 +1,5 @@
 <template>
-  <div class="gifts" v-bind:style="{ display : (giftListSwitch?'block':'none') }">
+  <div class="gifts"><!-- v-show="giftListSwitch"-->
             <div class="nav-box">
                 <ul>
                     <li class="act">
@@ -122,17 +122,12 @@
                 <p class="bottom-box-p"><i class="icon-zuan"></i><span>{{ user.diamond }}</span></p>
                 <div class="select-nums">
                     <div class="select-nums-text">
-                        <input type="text" value="1">
-                        <i class="icon-arrup"></i>
+                        <input v-model="num">
+                        <i class="icon-arrup" @click="selectNumListShow"></i>
                     </div>
-                    <div class="select-nums-list" style="display:block;">
+                    <div class="select-nums-list" v-show="selectNumListSwitch">
                         <ul>
-                            <li>10</li>
-                            <li>66</li>
-                            <li>99</li>
-                            <li class="act">188</li>
-                            <li>520</li>
-                            <li>1314</li>
+                            <li v-for="(numList,key) in selectNumList" :key="key" @click="numListSelect(key)" v-bind:class="{ act:key === num }">{{ key }}</li>
                         </ul>
                     </div>
                 </div>
@@ -153,7 +148,9 @@ export default {
       inputDialogSwitch: state => state.status.inputDialogSwitch,
       selectNumList: state => state.gift.selectNumList,
       gift_list: state => state.gift.gift_list,
-      user: state => state.user.user
+      user: state => state.user.user,
+      selectNumListSwitch: state => state.gift.selectNumListSwitch,
+      num: state => state.gift.num
     })
   },
   methods: {
@@ -161,7 +158,9 @@ export default {
       'loginChange',
       'downloadChange',
       'shareChange',
-      'giftChanage'
+      'giftChanage',
+      'selectNumListShow',
+      'numListSelect'
     ])
   }
 }
