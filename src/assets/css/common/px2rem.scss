@@ -1,0 +1,9 @@
+$fontSizeBase: 50;
+@function px2rem($args,$positive:true) {
+	@if $positive{
+		@return ($args/$fontSizeBase/2) + rem;
+	}
+	@else{
+		@return -($args/$fontSizeBase/2) + rem;
+	}
+}
