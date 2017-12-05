@@ -1,12 +1,13 @@
 <template>
-    <div class="heats">
-            热度：<span>9999999</span><i></i>
+    <div class="heats" v-if="heat">
+      热度:<span>{{ heat }}</span><i></i>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'heat'
+  name: 'heat',
+  props: ['heat']
 }
 </script>
 

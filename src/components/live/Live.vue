@@ -6,9 +6,7 @@
 
     <app-follow :anchor="anchor"></app-follow>
     <app-heat :heat="heat"></app-heat>
-    <app-guard></app-guard>
-
-    <div class="close"></div>
+    <app-guard :guards="guards" :show="showGuards" @hideGuards="showGuards=false"></app-guard>
 
     <app-chat></app-chat>
 
@@ -46,133 +44,141 @@
 </template>
 
 <script>
-  import AppFollow from '@/components/live/follow'
-  import AppHeat from '@/components/live/heat'
-  import AppGuard from '@/components/live/guard'
-  import AppChat from '@/components/live/chat'
-  import AppFoot from '@/components/live/foot'
-  import AppShare from '@/components/live/share'
-  import AppGift from '@/components/live/gift'
+import AppFollow from '@/components/live/follow'
+import AppHeat from '@/components/live/heat'
+import AppGuard from '@/components/live/guard'
+import AppChat from '@/components/live/chat'
+import AppFoot from '@/components/live/foot'
+import AppShare from '@/components/live/share'
+import AppGift from '@/components/live/gift'
 
-  import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
-  export default {
-    name: 'live',
-    computed: {
-      ...mapState({
-        loginDialogSwitch: state => state.status.loginDialogSwitch,
-        downloadDialogSwitch: state => state.status.downloadDialogSwitch,
-        giftListSwitch: state => state.status.giftListSwitch,
-        shareDialogSwitch: state => state.status.shareDialogSwitch,
-        inputDialogSwitch: state => state.status.inputDialogSwitch,
-
-        room: state => state.room
-      }),
-      heat () {
-        return this.room.room_obj ? this.room.room_obj.curr_hot_num : null
-      },
-      anchor () {
-        return this.room.room_obj ? this.room.room_obj.anchor_obj : null
-      }
-    },
-    methods: {
-      ...mapMutations(['loginChange', 'downloadChange']),
-      enterRoom () {
-        this.$store.dispatch('enterRoom', { room_id: this.$route.params.id })
-      }
-    },
-    components: {
-      'app-follow': AppFollow,
-      'app-heat': AppHeat,
-      'app-guard': AppGuard,
-      'app-chat': AppChat,
-      'app-foot': AppFoot,
-      'app-gift': AppGift,
-      'app-share': AppShare
-    },
-    created: function () {
-      this.enterRoom()
-    },
-    watch: {
-      '$route': 'enterRoom'
+export default {
+  name: 'live',
+  data () {
+    return {
+      showGuards: true
     }
+  },
+  computed: {
+    ...mapState({
+      loginDialogSwitch: state => state.status.loginDialogSwitch,
+      downloadDialogSwitch: state => state.status.downloadDialogSwitch,
+      giftListSwitch: state => state.status.giftListSwitch,
+      shareDialogSwitch: state => state.status.shareDialogSwitch,
+      inputDialogSwitch: state => state.status.inputDialogSwitch,
+
+      room: state => state.room
+    }),
+    heat () {
+      return this.room.room_obj ? this.room.room_obj.curr_hot_num : null
+    },
+    anchor () {
+      return this.room.room_obj ? this.room.room_obj.anchor_obj : null
+    },
+    guards () {
+      return this.room.user_guard_list ? this.room.user_guard_list : null
+    }
+  },
+  methods: {
+    ...mapMutations(['loginChange', 'downloadChange']),
+    enterRoom () {
+      this.$store.dispatch('enterRoom', { room_id: this.$route.params.id })
+    }
+  },
+  components: {
+    'app-follow': AppFollow,
+    'app-heat': AppHeat,
+    'app-guard': AppGuard,
+    'app-chat': AppChat,
+    'app-foot': AppFoot,
+    'app-gift': AppGift,
+    'app-share': AppShare
+  },
+  created: function () {
+    this.enterRoom()
+  },
+  watch: {
+    '$route': 'enterRoom'
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  @import "../../assets/css/common/px2rem.scss";
-  body {
-    height: 100%;
-  }
-  #app {
-    height: 100%;
-  }
-  .blur {
-    filter: blur(3px);
-  }
-  .bg {
-    background: url("../../assets/image/live_bg.png") no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .mask {
-    display: none;
-    position: absolute;
-    z-index: 5;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  .main {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  .into-msg {
-    position: absolute;
-    bottom: px2rem(110);
-    left: px2rem(26);
-    width: px2rem(460);
-    z-index: 2;
+@import "../../assets/css/common/px2rem.scss";
+body {
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+.blur {
+  filter: blur(3px);
+}
+.bg {
+  background: url("../../assets/image/live_bg.png") no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.mask {
+  display: none;
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.into-msg {
+  position: absolute;
+  bottom: px2rem(110);
+  left: px2rem(26);
+  width: px2rem(460);
+  z-index: 2;
   p {
     color: #ffffff;
     letter-spacing: px2rem(1);
     font-size: px2rem(30);
   }
-  }
-  .no-anchor {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    color: #fff;
-    font-size: px2rem(26);
-    letter-spacing: px2rem(1);
-    text-align: center;
-    z-index: 3;
-  }
-  .close {
-    position: absolute;
-    top: px2rem(35);
-    right: px2rem(18);
-    display: inline-block;
-    width: px2rem(32);
-    height: px2rem(31);
-    background: url("../../assets/image/live-close.png") no-repeat;
-    background-size: cover;
-    z-index: 2;
-  }
-  .bad-network {
-    position: absolute;
-    top: 35%;
-    text-align: center;
-    width: 100%;
-    z-index: 3;
+}
+.no-anchor {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  color: #fff;
+  font-size: px2rem(26);
+  letter-spacing: px2rem(1);
+  text-align: center;
+  z-index: 3;
+}
+.close {
+  position: absolute;
+  top: px2rem(35);
+  right: px2rem(18);
+  display: inline-block;
+  width: px2rem(32);
+  height: px2rem(31);
+  background: url("../../assets/image/live-close.png") no-repeat;
+  background-size: cover;
+  z-index: 2;
+}
+.bad-network {
+  position: absolute;
+  top: 35%;
+  text-align: center;
+  width: 100%;
+  z-index: 3;
   img {
     width: px2rem(70);
     height: px2rem(70);
@@ -183,43 +189,43 @@
     margin-top: px2rem(20);
     letter-spacing: px2rem(1);
   }
-  }
-  .no-network {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    color: #fff;
-    font-size: px2rem(26);
-    letter-spacing: px2rem(1);
-    text-align: center;
-    z-index: 3;
-  }
-  .follow-ok {
-    position: absolute;
-    z-index: 3;
-    top: 45%;
-    left: 50%;
-    margin-left: px2rem(130, false);
-    width: px2rem(260);
-    height: px2rem(88);
-    font-size: px2rem(32);
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: px2rem(10);
-    text-align: center;
-    line-height: px2rem(88);
-  }
-  .download-popup {
-    width: px2rem(526);
-    background: #fff;
-    border-radius: px2rem(10);
-    position: fixed;
-    z-index: 3;
-    top: 50%;
-    left: 50%;
-    margin-top: px2rem(256, false);
-    margin-left: px2rem(263, false);
-    text-align: center;
+}
+.no-network {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  color: #fff;
+  font-size: px2rem(26);
+  letter-spacing: px2rem(1);
+  text-align: center;
+  z-index: 3;
+}
+.follow-ok {
+  position: absolute;
+  z-index: 3;
+  top: 45%;
+  left: 50%;
+  margin-left: px2rem(130, false);
+  width: px2rem(260);
+  height: px2rem(88);
+  font-size: px2rem(32);
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: px2rem(10);
+  text-align: center;
+  line-height: px2rem(88);
+}
+.download-popup {
+  width: px2rem(526);
+  background: #fff;
+  border-radius: px2rem(10);
+  position: fixed;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  margin-top: px2rem(256, false);
+  margin-left: px2rem(263, false);
+  text-align: center;
   p {
     letter-spacing: px2rem(1);
   }
@@ -268,5 +274,5 @@
     right: px2rem(20);
     top: px2rem(20);
   }
-  }
+}
 </style>

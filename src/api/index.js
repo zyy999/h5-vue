@@ -9,24 +9,24 @@ const baseURL = 'http://n.h5.dwtv.tv/ajax/weixin'
 
 export function getRooms (cb) {
   axios.get('/rooms')
-    .then(res => {
-      cb(null, res)
-    })
-    .catch(err => {
-      cb(err)
-      console.log(err)
-    })
+  .then(res => {
+    cb(null, res)
+  })
+  .catch(err => {
+    cb(err)
+    console.log(err)
+  })
 }
 
 export function login (cb) {
   axios.get('/login')
-    .then(res => {
-      cb(null, res)
-    })
-    .catch(err => {
-      cb(err)
-      console.log(err)
-    })
+  .then(res => {
+    cb(null, res)
+  })
+  .catch(err => {
+    cb(err)
+    console.log(err)
+  })
 }
 
 export function index (cb) {
@@ -34,13 +34,13 @@ export function index (cb) {
     baseURL,
     headers
   })
-    .then(res => {
-      cb(null, res)
-    })
-    .catch(err => {
-      cb(err)
-      console.log(err)
-    })
+  .then(res => {
+    cb(null, res)
+  })
+  .catch(err => {
+    cb(err)
+    console.log(err)
+  })
 }
 
 export function getConfig (cb) {
@@ -48,13 +48,13 @@ export function getConfig (cb) {
     baseURL,
     headers
   })
-    .then(res => {
-      cb(null, res)
-    })
-    .catch(err => {
-      cb(err)
-      console.log(err)
-    })
+  .then(res => {
+    cb(null, res)
+  })
+  .catch(err => {
+    cb(err)
+    console.log(err)
+  })
 }
 
 export function enterRoom ({ room_id }, cb) {
@@ -63,11 +63,11 @@ export function enterRoom ({ room_id }, cb) {
     headers,
     params: { room_id: room_id }
   })
-    .then(res => {
-      cb(null, res)
-    })
-    .catch(err => {
-      cb(err)
-      console.log(err)
-    })
+  .then(res => {
+    cb(null, res)
+  })
+  .catch(err => {
+    cb(err)
+    console.log(err)
+  })
 }
